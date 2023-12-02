@@ -3,6 +3,12 @@ sec_ranks = ('Охранник', 'Главный Охранник смены', '
 HR_Ranks = ('Кадровик', 'Глава отдела кадров')
 accounting_ranks = ('Главный бухгалтер', 'ГлавБух')
 it_ranks = ('Junior', 'Middle', 'Senior')
+ranks = (('Охранник', 'Главный Охранник смены', 'Глава департамента охраны'), #0
+         ('Кадровик', 'Глава отдела кадров'), #1
+         ('Кадровик', 'Глава отдела кадров'), #2
+         ('Главный бухгалтер', 'ГлавБух'),    #3
+         ('Junior', 'Middle', 'Senior'))      #4
+
 
 class Person():
     def __init__(self, age, name, gender, salary):
@@ -40,6 +46,12 @@ class Person():
     def set_manager(self, manager):
         self.manager = manager
 
+    def get_rank(self):
+        return ranks[self.rankid][self.rank]
+
+    def set_rank(self, rank):
+        self.rank = rank
+
 class CEO(Person):
     def __init__(self, age, name, gender, salary):
         super().__init__(age, name, gender, salary)
@@ -51,36 +63,20 @@ class Header_of_Department(Person):
         self.role = "Глава отдела"
 
 class Accounting(Person):
-    def __init__(self, age, name, gender, salary, accounting_rank):
+    def __init__(self, age, name, gender, salary, rank, rankid = 3):
         super().__init__(age, name, gender, salary)
-        self.accounting_rank = accounting_rank
-        self.role = accounting_ranks[accounting_rank]
-
-    def get_accounting_rank(self):
-        return accounting_ranks[self.accounting_rank]
-
-    def set_accounting_rank(self):
-        if self.accounting_rank == 0:
-            return accounting_ranks[0]
-        elif self.accounting_rank == 1:
-            return accounting_ranks[1]
-
+        self.rank = rank
+        self.role = ranks[rankid][rank]
+        self.rankid = rankid
 
 
 class Security(Person):
-    def __init__(self, age, name, gender, salary, security_rank, armament):
+    def __init__(self, age, name, gender, salary, rank, armament, rankid = 0):
         super().__init__(age, name, gender, salary)
-        self.security_rank = security_rank
         self.armament = armament
-        self.role = self.get_security_rank()
-
-    def get_security_rank(self):
-        for i in range(0, len(sec_ranks)):
-            if i == self.security_rank:
-                return sec_ranks[i]
-
-    def set_security_rank(self, security_rank):
-        self.security_rank = security_rank
+        self.rank = rank
+        self.role = ranks[rankid][rank]
+        self.rankid = rankid
 
     def get_armament(self):
         for i in range(0, len(listofarms)):
@@ -91,19 +87,19 @@ class Security(Person):
         self.armament = armament
 
 class HR(Person):
-    def __init__(self, age, name, gender, salary, HR_Rank):
+    def __init__(self, age, name, gender, salary, rank, rankid = 2):
         super().__init__(age, name, gender, salary)
-        self.HR_Rank = HR_Rank
-        self.role = HR_Ranks[HR_Rank]
+        self.rank = rank
+        self.role = ranks[rankid][rank]
+        self.rankid = rankid
 
-    def get_HR_Rank(self):
-        return HR_Ranks[self.HR_Rank]
 
 class Programmer(Person):
-    def __init__(self, age, name, gender, salary, it_rank):
+    def __init__(self, age, name, gender, salary, rank, rankid = 4):
         super().__init__(age, name, gender, salary)
-        self.it_rank = it_rank
-        self.role = it_ranks[it_rank]
+        self.rank = rank
+        self.role = ranks[rankid][rank]
+        self.rankid = rankid
 
     def get_it_rank(self):
         return it_ranks[self.it_rank]
@@ -124,8 +120,10 @@ class OrganizationUnit:
         return self.employees
 
     def assign_manager(self):
-        for i in range(0, (len(self.employees))):
-            pass #Доделатб!!!
+        self.employees.sort(key=lambda x: x.rank, reverse=True)
+        for i in range(1, len(self.employees)):
+            self.employees[i].set_manager(self.employees[0])
+
 
     def display_structure(self, level = 0):
         print('  ' * level + self.name)
@@ -181,6 +179,7 @@ security_departmnet.add_employee(SecOfficer2)
 security_departmnet.add_employee(SecOfficer3)
 security_departmnet.add_employee(SecOfficer4)
 security_departmnet.add_employee(SecOfficer5)
+security_departmnet.assign_manager()
 
 #Бухгалтерия
 
@@ -188,19 +187,23 @@ Accounter1 = Accounting(35, 'Елена', 'w', '60000', 0)
 Accounter2 = Accounting(55, 'Лариса', 'w', '100000', 1)
 accounting_department.add_employee(Accounter1)
 accounting_department.add_employee(Accounter2)
+accounting_department.assign_manager()
 
 #Отдел Кадров
 HR1 = HR(40, 'Виктория', 'w', '130000', 1)
 HR2 = HR(30, 'Владимир', 'm', '90000', 0)
 head_recruitment_department.add_employee(HR1)
 head_recruitment_department.add_employee(HR2)
+head_recruitment_department.assign_manager()
+security_departmnet.assign_manager()
 
 #IT Отдел
 Programmer1 = Programmer(43, 'Виталий', 'm', '130000', 2)
 Programmer2 = Programmer(23, 'Илья', 'm', '70000', 0)
 it_department.add_employee(Programmer2)
 it_department.add_employee(Programmer1)
-
+it_department.assign_manager()
 HD1.set_manager(CEO1)
+
 
 company.display_structure()
