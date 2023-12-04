@@ -58,12 +58,12 @@ class CEO(Person):
         super().__init__(age, name, gender, salary)
         self.role = "Глава компании"
 
-class Header_of_Department(Person):
+class Head_of_Department(Person):
     def __init__(self, age, name, gender, salary):
         super().__init__(age, name, gender, salary)
         self.role = "Глава отдела"
 
-class Accounting(Person):
+class Accounter(Person):
     def __init__(self, age, name, gender, salary, rank, rankid = 3):
         super().__init__(age, name, gender, salary)
         self.rank = rank
@@ -147,7 +147,7 @@ class OrganizationUnit:
             subuint.display_structure(level + 1)
 
 
-CEO1 = CEO(65, 'Владимир', 'm', '7777777')
+CEO1 = CEO(65, 'Владимир Спиридонов', 'm', '7777777')
 
 company = OrganizationUnit('Rostec')
 
@@ -170,20 +170,20 @@ administrative_department.add_organization_unit(head_recruitment_department)
 finance_department.add_organization_unit(accounting_department)
 
 # Административный отдел
-HD1 = Header_of_Department(40, 'Евгений', 'm', '150000')
+HD1 = Head_of_Department(40, 'Евгений Гареев', 'm', '150000')
 administrative_department.add_employee(HD1)
 
 # Финансовый отдел
-HD2 = Header_of_Department(55, 'Юлия', 'w', '200000')
+HD2 = Head_of_Department(55, 'Юлия Алеексеевна', 'w', '200000')
 finance_department.add_employee(HD2)
 HD2.set_manager(CEO1)
 # Охрана
 
-SecOfficer1 = Security(27, 'Кирилл', 'm', '70000', 2, 2)
-SecOfficer2 = Security(35, 'Илья', 'm', '130000', 1, 1)
-SecOfficer3 = Security(30, 'Валерий', 'm', '50000', 0, 0)
-SecOfficer4 = Security(23, 'Антон', 'm', '45000', 0, 0)
-SecOfficer5 = Security(22, 'Алексей', 'm', '50000', 0, 0)
+SecOfficer1 = Security(27, 'Кирилл Матвеев', 'm', '70000', 2, 2)
+SecOfficer2 = Security(35, 'Илья Заботин', 'm', '130000', 1, 1)
+SecOfficer3 = Security(30, 'Валерий Сугробов', 'm', '50000', 0, 0)
+SecOfficer4 = Security(23, 'Антон Веденкин', 'm', '45000', 0, 0)
+SecOfficer5 = Security(22, 'Алексей Фомин', 'm', '50000', 0, 0)
 
 security_departmnet.add_employee(SecOfficer1)
 security_departmnet.add_employee(SecOfficer2)
@@ -195,16 +195,16 @@ SecOfficer1.set_manager(CEO1)
 
 # Бухгалтерия
 
-Accounter1 = Accounting(35, 'Елена', 'w', '60000', 0)
-Accounter2 = Accounting(55, 'Лариса', 'w', '100000', 1)
+Accounter1 = Accounter(35, 'Елена Ильина', 'w', '60000', 0)
+Accounter2 = Accounter(55, 'Лариса Рыбникова', 'w', '100000', 1)
 accounting_department.add_employee(Accounter1)
 accounting_department.add_employee(Accounter2)
 accounting_department.assign_manager()
 Accounter2.set_manager(CEO1)
 
 # Отдел Кадров
-HR1 = HR(40, 'Виктория', 'w', '130000', 1)
-HR2 = HR(30, 'Владимир', 'm', '90000', 0)
+HR1 = HR(40, 'Виктория Минина', 'w', '130000', 1)
+HR2 = HR(30, 'Владимир Алексеев', 'm', '90000', 0)
 head_recruitment_department.add_employee(HR1)
 head_recruitment_department.add_employee(HR2)
 head_recruitment_department.assign_manager()
@@ -212,8 +212,8 @@ security_departmnet.assign_manager()
 HR1.set_manager(CEO1)
 
 # IT Отдел
-Programmer1 = Programmer(43, 'Виталий', 'm', '130000', 2)
-Programmer2 = Programmer(23, 'Илья', 'm', '70000', 0)
+Programmer1 = Programmer(43, 'Виталий Данилов', 'm', '130000', 2)
+Programmer2 = Programmer(23, 'Илья Саламатов', 'm', '70000', 0)
 it_department.add_employee(Programmer2)
 it_department.add_employee(Programmer1)
 it_department.assign_manager()
@@ -221,8 +221,8 @@ HD1.set_manager(HD1)
 Programmer1.set_manager(HD1)
 
 #Отдел Логистики
-Logist1 = Logist(40, 'Мария', 'w', '150000', 1)
-Logist2 = Logist(35, 'Евгений', 'm', '80000', 0)
+Logist1 = Logist(40, 'Мария Серебрянникова', 'w', '150000', 1)
+Logist2 = Logist(35, 'Евгений Латынин', 'm', '80000', 0)
 Logist1.set_manager(HD2)
 logistic_department.add_employee(Logist2)
 logistic_department.add_employee(Logist1)
