@@ -26,6 +26,9 @@ class Person():
     def get_worker(self):
         return self.workers
 
+    def get_worker_names(self):
+        return [worker.name for worker in self.workers]
+
     def set_worker(self, worker):
         if worker is not None:
             return self.workers.append(worker)
@@ -167,15 +170,11 @@ class OrganizationUnit:
         if len(self.employees) >= 1:
             print(('  ') * (level + 1) + 'Работники отдела:')
         for employee in self.employees:
-            if employee.get_manager() != None:
-                print('  ' * (level + 1) + str(
-                    employee.name + ' - ' + employee.role + ', подчиняется: ' + employee.get_manager().get_name()) + ' ,подчиняет: ' + str(
-                    employee.get_worker()))
-            else:
-                print('  ' * (level + 1) + str(
-                    employee.name + ' - ' + employee.role + ' ,подчиняет: ' + str(employee.get_worker())))
-        for subuint in self.subunits:
-            subuint.display_structure(level + 1)
+            manager_name = employee.get_manager().get_name() if employee.get_manager() else 'Никому'
+            print('  ' * (
+                        level + 1) + f'{employee.name} - {employee.role}, подчиняется: {manager_name}, подчиняет: {employee.get_worker_names()}')
+        for subunit in self.subunits:
+            subunit.display_structure(level + 1)
 
 
 CEO1 = CEO(65, 'Владимир Спиридонов', 'm', '7777777')
