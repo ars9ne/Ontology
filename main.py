@@ -28,7 +28,7 @@ class Person():
 
     def set_worker(self, worker):
         if worker is not None:
-            return self.workers.append(worker.get_name())
+            return self.workers.append(worker)
 
     def get_manager(self):
         return self.manager
@@ -201,7 +201,7 @@ administrative_department.add_organization_unit(head_recruitment_department)
 finance_department.add_organization_unit(accounting_department)
 
 # Административный отдел
-HD1 = Head_of_Department(40, 'Евгений Гареев', 'm', '150000')
+HD1 = Head_of_Department(40, 'Евгений Леоньтев', 'm', '150000')
 administrative_department.add_employee(HD1)
 HD1.set_manager(CEO1)
 
@@ -265,5 +265,6 @@ logistic_department.assign_manager()
 administrative_department.assign_director()
 finance_department.assign_director()
 # company.assign_director()
-company.display_structure()
-print(company.get_subunits()[0].get_employees()[0].get_name())
+#company.display_structure()
+
+print(Programmer2.get_manager().get_manager().get_manager().get_worker()[1].get_name())
